@@ -3,8 +3,8 @@ name: Build and Release Windows App
 on:
   push:
     tags:
-      - 'v*' # هر زمان که تگی با پیشوند v (مثل v1.0.0) زدید، اکشن خودکار ران می‌شود
-  workflow_dispatch: # این خط دکمه دستی برای اجرای اکشن را اضافه می‌کند
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,6 +19,11 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Enable Windows Desktop & Create Platform Files
+        run: |
+          flutter config --enable-windows-desktop
+          flutter create --platforms=windows .
+
       - name: Get dependencies
         run: flutter pub get
 
@@ -28,9 +33,7 @@ jobs:
       - name: Archive Release Folder
         shell: pwsh
         run: |
-          # مسیر خروجی بیلد ویندوز
           $source = "build\windows\x64\runner\Release"
-          # نام فایل زیپ خروجی
           $dest = "AdvancedCalculator_Windows.zip"
           Compress-Archive -Path "$source\*" -DestinationPath $dest
 
