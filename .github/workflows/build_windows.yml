@@ -3,7 +3,8 @@ name: Build and Release Windows App
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*' # هر زمان که تگی با پیشوند v (مثل v1.0.0) زدید، اکشن خودکار ران می‌شود
+  workflow_dispatch: # این خط دکمه دستی برای اجرای اکشن را اضافه می‌کند
 
 jobs:
   build:
@@ -27,7 +28,9 @@ jobs:
       - name: Archive Release Folder
         shell: pwsh
         run: |
+          # مسیر خروجی بیلد ویندوز
           $source = "build\windows\x64\runner\Release"
+          # نام فایل زیپ خروجی
           $dest = "AdvancedCalculator_Windows.zip"
           Compress-Archive -Path "$source\*" -DestinationPath $dest
 
