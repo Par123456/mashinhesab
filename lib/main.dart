@@ -30,7 +30,7 @@ void main() async {
   // اعمال تنظیمات و نمایش پنجره
   await windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
-    await windowManager.setFocus();
+    // خط setFocus حذف شد تا خطای کامپایل در گیت‌هاب برطرف شود
   });
 
   runApp(const MyApp());
@@ -174,7 +174,7 @@ class ForceUpdateScreen extends StatelessWidget {
   const ForceUpdateScreen({
     super.key,
     required this.downloadUrl,
-    required this.latestVersion, // باگ سینتکسی اصلاح شد
+    required this.latestVersion,
   });
 
   @override
