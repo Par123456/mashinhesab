@@ -1,14 +1,13 @@
 name: Build and Release Windows App
 
 on:
-  push:
-    tags:
-      - 'v*'
-  workflow_dispatch:
+  workflow_dispatch: # فقط با دکمه دستی اجرا میشه
 
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write # دسترسی برای ساخت خودکار تگ و ریلیز
 
     steps:
       - name: Checkout code
@@ -37,9 +36,11 @@ jobs:
           $dest = "AdvancedCalculator_Windows.zip"
           Compress-Archive -Path "$source\*" -DestinationPath $dest
 
-      - name: Create GitHub Release and Upload Asset
+      - name: Create Tag and Release Automatically
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v1.0.0 # خودش این تگ را می‌سازد
+          name: Release v1.0.0
           files: AdvancedCalculator_Windows.zip
           generate_release_notes: true
         env:
